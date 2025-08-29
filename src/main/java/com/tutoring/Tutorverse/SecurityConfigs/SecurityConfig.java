@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for API endpoints
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000", "http://localhost:3000"));
+                    config.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000", "http://localhost:3000,http://10.8.0.8:3000"));
                     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
                     config.setAllowedHeaders(Arrays.asList("*"));
                     config.setAllowCredentials(true);
@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**","/").permitAll()
-                        .requestMatchers("/api/**").permitAll() // allow all API endpoints without authentication
+                        .requestMatchers("/api/**","/create/**").permitAll() // allow all API endpoints without authentication
                         .requestMatchers("/login", "/oauth2/**", "/error").permitAll() // allow OAuth2 endpoints and error page
                         .requestMatchers("/home/**").permitAll() // allow home endpoints for OAuth2 callback
                         .anyRequest().authenticated()
