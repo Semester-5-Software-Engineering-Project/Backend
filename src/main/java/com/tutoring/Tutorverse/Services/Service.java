@@ -1,5 +1,5 @@
 package com.tutoring.Tutorverse.Services;
 
-public @interface Service {
+public interface Service {
 
 }
