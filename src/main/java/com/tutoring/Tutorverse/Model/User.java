@@ -122,4 +122,8 @@ public class User {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public void setUserId(UUID studentId) {
+        this.id = studentId;
+    }
 }
