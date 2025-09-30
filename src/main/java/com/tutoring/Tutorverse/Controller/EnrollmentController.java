@@ -46,6 +46,7 @@ public class EnrollmentController {
         try {
             UUID userId = userService.getUserIdFromRequest(req);
             if(userId == null || !userService.isStudent(userId)) {
+
                 return ResponseEntity.status(401).body("Unauthorized or Invalid User");
             }
             EnrollCreateDto enrollCreateDto = new EnrollCreateDto();
@@ -96,5 +97,18 @@ public class EnrollmentController {
         }
     }
     
+    @GetMapping("/get-enrollment-details/{moduleId}")
+    public ResponseEntity<Boolean> getEnrollmentDetails(@PathVariable UUID moduleId, HttpServletRequest req) {
+        try {
+            boolean isPaid = enrollmentService.findIsPaidByStudentIdAndModuleId(
+                    userService.getUserIdFromRequest(req),
+                    moduleId
+            );
+            return ResponseEntity.ok(isPaid);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(false);
+        }
+    }
+
 
 }
